@@ -1,28 +1,27 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from 'expo-status-bar';
+import { Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { createHomeStyles } from '@/assets/styles/home.styles';
 import { useTheme } from '@/hooks/useTheme';
 
 export default function Index() {
-  const { toggleDarkMode } = useTheme();
+  const { toggleDarkMode, colors, isDarkMode } = useTheme();
+
+  const homeStyles = createHomeStyles(colors);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.content}>Merhaba</Text>
-      <Text>hiaaaaaa </Text>
-      <TouchableOpacity onPress={toggleDarkMode}>
-        <Text> Toogle the mode </Text>
-      </TouchableOpacity>
-    </View>
+    <LinearGradient
+      colors={colors.gradients.background}
+      style={homeStyles.container}
+    >
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
+      <SafeAreaView style={homeStyles.safeArea}>
+        <TouchableOpacity onPress={toggleDarkMode}>
+          <Text> Toogle the mode </Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 10,
-  },
-  content: {
-    fontSize: 22,
-  },
-});
